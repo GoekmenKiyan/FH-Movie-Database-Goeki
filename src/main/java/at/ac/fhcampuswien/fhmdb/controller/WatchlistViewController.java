@@ -42,7 +42,8 @@ public class WatchlistViewController {
    public void initialize() {
        System.out.println("WatchlistViewController initialized");
 
-       repository = new WatchlistRepository();
+       //repository = new WatchlistRepository();
+       repository = WatchlistRepository.getInstance();
        List<WatchlistEntity> movieEntities = new ArrayList<>();
 
        try {

@@ -31,7 +31,8 @@ public class MovieCell extends ListCell<Movie> {
 
     private final VBox layout = new VBox(title, detail, genre, detailBtn, addToWatchlistBtn);
 
-    WatchlistRepository repository = new WatchlistRepository();
+    //WatchlistRepository repository = new WatchlistRepository();
+    WatchlistRepository repository = WatchlistRepository.getInstance();
 
     private boolean collapsedDetails = true;
 
