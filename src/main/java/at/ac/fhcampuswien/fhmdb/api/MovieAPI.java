@@ -13,6 +13,10 @@ import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import okhttp3.*;
 import com.google.gson.*;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
+
 
 public class MovieAPI {
     private static final String URL_API = "https://prog2.fh-campuswien.ac.at/movies";
@@ -20,7 +24,57 @@ public class MovieAPI {
     private static final String DELIMITER = "&"; //Separator
 
 
+    public static class UrlBuilder {
+        private StringBuilder url;
+
+        public UrlBuilder() {
+            url = new StringBuilder(URL_API);
+        }
+
+        public UrlBuilder withQuery(String query) {
+            if (query != null && !query.isEmpty()) {
+                url.append("?query=").append(query).append(DELIMITER);
+            }
+            return this;
+        }
+
+        public UrlBuilder withGenre(Genre genre) {
+            if (genre != null) {
+                url.append("genre=").append(genre).append(DELIMITER);
+            }
+            return this;
+        }
+
+        public UrlBuilder withReleaseYear(String releaseYear) {
+            if (releaseYear != null) {
+                url.append("releaseYear=").append(releaseYear).append(DELIMITER);
+            }
+            return this;
+        }
+
+        public UrlBuilder withRatingFrom(String ratingFrom) {
+            if (ratingFrom != null) {
+                url.append("ratingFrom=").append(ratingFrom).append(DELIMITER);
+            }
+            return this;
+        }
+
+        public String build() {
+            return url.toString();
+        }
+    }
+
     //damit wir die dann hinschicken können hehe
+    private static String buildURL(String query, Genre genre, String releaseYear, String ratingFrom) {
+        return new UrlBuilder()
+                .withQuery(query)
+                .withGenre(genre)
+                .withReleaseYear(releaseYear)
+                .withRatingFrom(ratingFrom)
+                .build();
+    }
+
+    /*
     private static String buildURL(String query, Genre genre, String releaseYear, String ratingFrom){
 
         StringBuilder url = new StringBuilder(URL_API);
@@ -43,6 +97,7 @@ public class MovieAPI {
         }
         return url.toString();
     }
+     */
 
     //Ohne Parameter Aufgerufen wird dann:  //Übersichtlicher, damit man es nicht später in den anderen Methoden schreiben muss
     public static List<Movie> getAllMovies(){
