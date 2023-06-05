@@ -21,11 +21,12 @@ import java.net.URL;
 public class MovieAPI {
     private static final String URL_API = "https://prog2.fh-campuswien.ac.at/movies";
     private static final String URL = "http://localhost:8080/movies";
-    private static final String DELIMITER = "&"; //Separator
+    static final String DELIMITER = "&"; //Separator
 
 
+    /*
     public static class UrlBuilder {
-        private StringBuilder url;
+        private final StringBuilder url;
 
         public UrlBuilder() {
             url = new StringBuilder(URL_API);
@@ -63,17 +64,17 @@ public class MovieAPI {
             return url.toString();
         }
     }
+     */
 
     //damit wir die dann hinschicken können hehe
     private static String buildURL(String query, Genre genre, String releaseYear, String ratingFrom) {
-        return new UrlBuilder()
+        return new URLBuilder()
                 .withQuery(query)
                 .withGenre(genre)
                 .withReleaseYear(releaseYear)
                 .withRatingFrom(ratingFrom)
                 .build();
     }
-
     /*
     private static String buildURL(String query, Genre genre, String releaseYear, String ratingFrom){
 

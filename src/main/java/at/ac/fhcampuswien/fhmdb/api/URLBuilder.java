@@ -2,62 +2,46 @@ package at.ac.fhcampuswien.fhmdb.api;
 
 import at.ac.fhcampuswien.fhmdb.models.Genre;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
+import static at.ac.fhcampuswien.fhmdb.api.MovieAPI.DELIMITER;
 
 public class URLBuilder {
-    private static final String DELIMITER = "&"; //Separator
-    private String query;
-    private Genre genre;
-    private String releaseYear;
-    private String ratingFrom;
+    private static final String URL_API = "https://prog2.fh-campuswien.ac.at/movies";
+    private static final String URL = "http://localhost:8080/movies";
+    private final StringBuilder url;
 
+    public URLBuilder() {
+        url = new StringBuilder(URL_API);
+    }
 
     public URLBuilder withQuery(String query) {
-        this.query = this.query;
+        if (query != null && !query.isEmpty()) {
+            url.append("?query=").append(query).append(DELIMITER);
+        }
         return this;
     }
 
     public URLBuilder withGenre(Genre genre) {
-        this.genre = genre;
+        if (genre != null) {
+            url.append("genre=").append(genre).append(DELIMITER);
+        }
         return this;
     }
 
     public URLBuilder withReleaseYear(String releaseYear) {
-        this.releaseYear = releaseYear;
+        if (releaseYear != null) {
+            url.append("releaseYear=").append(releaseYear).append(DELIMITER);
+        }
         return this;
     }
 
     public URLBuilder withRatingFrom(String ratingFrom) {
-        this.ratingFrom = ratingFrom;
+        if (ratingFrom != null) {
+            url.append("ratingFrom=").append(ratingFrom).append(DELIMITER);
+        }
         return this;
     }
 
-
-    public URL build() throws MalformedURLException {
-        StringBuilder url = new StringBuilder();
-        // urlString.append(protocol).append("://").append(protocol);
-
-
-        //Checken, ob was übergeben wurde (Wenn ein Parameter übergeben wurde, brauchen wir ein "?"
-        if((query != null && !query.isEmpty())|| genre != null || releaseYear != null || ratingFrom != null) { //empty ""
-            url.append("?");
-            if(query != null && !query.isEmpty()){
-                url.append("query=").append(query).append(DELIMITER);
-            }
-            if(genre != null){
-                url.append("genre=").append(genre).append(DELIMITER);
-            }
-            if(releaseYear != null){
-                url.append("releaseYear=").append(releaseYear).append(DELIMITER);
-            }
-            if(ratingFrom != null){
-                url.append("ratingFrom=").append(ratingFrom).append(DELIMITER);
-            }
-        }
-        //return url.toString();
-        return new URL(url.toString());
+    public String build() {
+        return url.toString();
     }
 }
-
